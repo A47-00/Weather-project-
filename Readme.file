@@ -1,0 +1,65 @@
+```python
+import requests
+import tkinter as tk
+from tkinter import messagebox
+
+def get_weather(city):
+    api_key = 'YOUR_API_KEY'  # Replace with your OpenWeatherMap API key
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        weather_desc = data['weather'][0]['description']
+        temp = data['main']['temp']
+        humidity = data['main']['humidity']
+        return f"Weather: {weather_desc}\nTemperature: {temp}°C\nHumidity: {humidity}%"
+    else:
+        return "City not found"
+
+def show_weather():
+    city = city_entry.get()
+    weather = get_weather(city)
+    messagebox.showinfo("Weather", weather)
+
+# Create the main window
+window = tk.Tk()
+window.title("Weather App")
+
+# City label and entry
+city_label = tk.Label(window, text="Enter city:")
+city_label.pack()
+city_entry = tk.Entry(window)
+city_entry.pack()
+
+# Get weather button
+get_weather_button = tk.Button(window, text="Get Weather", command=show_weather)
+get_weather_button.pack()
+
+window.mainloop()
+```
+
+**To use this code:**
+
+1.  **Replace `'YOUR_API_KEY'`** with your actual OpenWeatherMap API key.
+2.  **Install the `requests` library:** `pip install requests`
+3.  **Run the script.**
+
+**Explanation:**
+
+* **`get_weather(city)` function:**
+    * Takes a city name as input.
+    * Constructs the API URL using the city and your API key.
+    * Sends a request to the OpenWeatherMap API.
+    * Parses the JSON response to extract weather information.
+    * Returns a formatted string with weather details.
+* **`show_weather()` function:**
+    * Gets the city name from the entry field.
+    * Calls `get_weather()` to fetch weather data.
+    * Displays the weather information in a message box.
+* **GUI setup:**
+    * Creates the main window using `tkinter`.
+    * Adds a label and entry for the city name.
+    * Adds a button to trigger the weather retrieval.
+    * Starts the main event loop to display the window.
+
+Citations: [[1]](https://github.com/ARUNRGAGILITY/learning), [[2]](https://github.com/vishal200410/codesoft-pythoninternship), [[3]](https://github.com/Fchauhan/CODSOFT)
